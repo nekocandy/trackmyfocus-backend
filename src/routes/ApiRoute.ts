@@ -46,7 +46,7 @@ router.post('/sessions/create', async (req: CustomRequest, res: Response) => {
   const created = await prisma.sessions.create({
     data: {
       email: mail,
-      session: 'session',
+      session: sessionName,
     },
   });
 
