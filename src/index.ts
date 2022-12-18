@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 
 import * as express from 'express';
 import { auth } from 'express-oauth2-jwt-bearer';
+import * as cors from 'cors';
 
 import ApiRoute from './routes/ApiRoute';
 import DataRoute from './routes/DataRoute';
@@ -9,6 +10,8 @@ import DataRoute from './routes/DataRoute';
 config();
 
 const app = express();
+
+app.use(cors());
 
 // eslint-disable-next-line max-len
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention, no-underscore-dangle
