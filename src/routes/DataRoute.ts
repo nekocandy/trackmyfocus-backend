@@ -37,20 +37,20 @@ router.get('/data/:sessionId', async (req: Request, res: Response) => {
   return res.status(404).json({ error: 'Session not found' });
 });
 
-router.get('/sessions/:email', (req: Request, res: Response) => {
+router.get('/sessions/:email', async (req: Request, res: Response) => {
   const { email } = req.params;
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
   }
 
-  const data = prisma.sessions.findMany({
+  const data = await prisma.sessions.findMany({
     where: {
       email,
     },
   });
 
-  if (data) {
+  if (data && data.length > 0) {
     return res.json(data);
   }
 
