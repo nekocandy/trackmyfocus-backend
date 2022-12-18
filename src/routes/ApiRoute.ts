@@ -1,7 +1,7 @@
 import {
   NextFunction, Response, Router,
 } from 'express';
-import { sign, verify } from '../utils/jwt';
+import { verify } from '../utils/jwt';
 import prisma from '../utils/prisma';
 import { CustomRequest } from '../utils/types';
 

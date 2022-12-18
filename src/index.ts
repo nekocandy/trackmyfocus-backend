@@ -13,6 +13,7 @@ config();
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 // eslint-disable-next-line max-len
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention, no-underscore-dangle
