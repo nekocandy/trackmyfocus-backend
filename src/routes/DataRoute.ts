@@ -18,6 +18,17 @@ router.get('/data/:sessionId', async (req: Request, res: Response) => {
     where: {
       id: sessionId,
     },
+    include: {
+      Focus: {
+        select: {
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          email: true,
+          sessionId: true,
+        },
+      },
+    },
   });
 
   if (data) {
