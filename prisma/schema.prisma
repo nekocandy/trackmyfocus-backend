@@ -6,6 +6,25 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
+}
+
+model Sessions {
+  id        String   @id @default(uuid())
+  session   String   @db.String()
+  email     String   @db.String()
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Focus     Focus[]
+}
+
+model Focus {
+  id        String   @id @default(uuid())
+  session   String   @db.String()
+  email     String   @db.String()
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessionID Sessions @relation(fields: [session], references: [id])
 }
