@@ -30,14 +30,6 @@ router.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-router.post('/createToken', async (req, res) => {
-  const { email } = req.body;
-
-  const token = sign({ email }, { });
-
-  return res.json(token);
-});
-
 router.post('/sessions/create', async (req: CustomRequest, res: Response) => {
   const mail = req.email;
 

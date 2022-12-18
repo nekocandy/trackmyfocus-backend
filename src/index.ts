@@ -6,6 +6,7 @@ import * as cors from 'cors';
 
 import ApiRoute from './routes/ApiRoute';
 import DataRoute from './routes/DataRoute';
+import { sign } from './utils/jwt';
 
 config();
 
@@ -22,6 +23,14 @@ const _checkAuth = auth({
 
 app.use('/api', ApiRoute);
 app.use('/data', DataRoute);
+
+app.post('/createToken', async (req, res) => {
+  const { email } = req.body;
+
+  const token = sign({ email }, { });
+
+  return res.json(token);
+});
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
