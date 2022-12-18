@@ -4,6 +4,7 @@ import * as express from 'express';
 import { auth } from 'express-oauth2-jwt-bearer';
 
 import ApiRoute from './routes/ApiRoute';
+import DataRoute from './routes/DataRoute';
 
 config();
 
@@ -17,6 +18,7 @@ const _checkAuth = auth({
 });
 
 app.use('/api', ApiRoute);
+app.use('/data', DataRoute);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
