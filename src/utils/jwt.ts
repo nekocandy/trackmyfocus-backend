@@ -1,6 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import * as jsonwebtoken from 'jsonwebtoken';
 
+require('dotenv').config();
+
 const secret = process.env.JWT_SECRET!!;
 
 // eslint-disable-next-line max-len

@@ -1,14 +1,13 @@
-import { config } from 'dotenv';
-
 import * as express from 'express';
 import { auth } from 'express-oauth2-jwt-bearer';
 import * as cors from 'cors';
 
 import ApiRoute from './routes/ApiRoute';
 import DataRoute from './routes/DataRoute';
+
 import { sign } from './utils/jwt';
 
-config();
+require('dotenv').config();
 
 const app = express();
 
