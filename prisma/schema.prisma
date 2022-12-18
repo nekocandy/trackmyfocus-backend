@@ -11,20 +11,21 @@ datasource db {
 }
 
 model Sessions {
-  id        String   @id @default(uuid())
-  session   String   @db.String()
-  email     String   @db.String()
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Focus     Focus[]
+  id          String    @id @default(uuid())
+  session     String    @db.String()
+  email       String    @db.String()
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime? @db.Timestamp()
+  Focus       Focus[]
 }
 
 model Focus {
   id        String   @id @default(uuid())
-  session   String   @db.String()
+  sessionId String   @db.String()
   email     String   @db.String()
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sessionID Sessions @relation(fields: [session], references: [id])
+  session Sessions @relation(fields: [sessionId], references: [id])
 }

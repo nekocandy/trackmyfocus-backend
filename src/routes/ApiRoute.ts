@@ -1,5 +1,5 @@
 import {
-  NextFunction, Request, Response, Router,
+  NextFunction, Response, Router,
 } from 'express';
 import { sign, verify } from '../utils/jwt';
 import prisma from '../utils/prisma';
@@ -21,6 +21,7 @@ const checkToken = (req: CustomRequest, res: Response, next: NextFunction) => {
     req.email = email;
     return next();
   }
+  return res.status(401).json({ error: 'You must be logged in' });
 };
 
 router.use(checkToken);
@@ -34,7 +35,7 @@ router.post('/createToken', async (req, res) => {
 
   const token = sign({ email }, { });
 
-  res.json(token);
+  return res.json(token);
 });
 
 router.post('/sessions/create', async (req: CustomRequest, res: Response) => {
@@ -57,30 +58,55 @@ router.post('/sessions/create', async (req: CustomRequest, res: Response) => {
     },
   });
 
-  res.json(created);
+  return res.json(created);
 });
 
 router.post('/sessions/record', async (req: CustomRequest, res: Response) => {
   const mail = req.email;
 
-  const { sessionName } = req.body;
+  const { sessionId } = req.body;
 
   if (!mail) {
     return res.status(401).json({ error: 'You must be logged in' });
   }
 
-  if (!sessionName) {
-    return res.status(400).json({ error: 'Session name is required' });
+  if (!sessionId) {
+    return res.status(400).json({ error: 'Session ID is required' });
   }
 
   const created = await prisma.focus.create({
     data: {
       email: mail,
-      session: sessionName,
+      sessionId,
     },
   });
 
-  res.json(created);
+  return res.json(created);
+});
+
+router.post('/sessions/stop', async (req: CustomRequest, res: Response) => {
+  const mail = req.email;
+
+  const { sessionId } = req.body;
+
+  if (!mail) {
+    return res.status(401).json({ error: 'You must be logged in' });
+  }
+
+  if (!sessionId) {
+    return res.status(400).json({ error: 'Session name is required' });
+  }
+
+  const updated = await prisma.sessions.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      completedAt: new Date(),
+    },
+  });
+
+  return res.json(updated);
 });
 
 export default router;
