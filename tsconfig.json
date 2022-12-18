@@ -13,7 +13,7 @@
     "strict": true,
     "target": "esnext",
     "plugins": [],
-    "types": ["node", "./node_modules/@types/**/*"]
+    "types": ["node"]
   },
   "exclude": ["node_modules"],
   "include": ["src"]
